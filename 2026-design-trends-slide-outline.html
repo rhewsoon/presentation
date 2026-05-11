@@ -1,0 +1,1713 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>2026 디자인 트렌드 분석 · 부서 공유</title>
+  <style>
+    :root {
+      --bg: #070a10;
+      --bg-slide: #0e141e;
+      --card: rgba(255, 255, 255, 0.06);
+      --card-edge: rgba(255, 255, 255, 0.12);
+      --text: #eef3f8;
+      --muted: #94a8bd;
+      --accent: #6eb8e8;
+      --accent-soft: rgba(110, 184, 232, 0.22);
+      --chrome-bg: rgba(7, 10, 16, 0.88);
+      --shadow-card: 0 24px 48px rgba(0, 0, 0, 0.35);
+      --radius: 18px;
+      --radius-sm: 12px;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    body {
+      font-family: "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", system-ui, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* ——— Deck ——— */
+    .deck {
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      touch-action: pan-y pinch-zoom;
+    }
+
+    .deck-track {
+      display: flex;
+      height: 100%;
+      width: 100%;
+      will-change: transform;
+      transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .slide {
+      position: relative;
+      flex: 0 0 100%;
+      width: 100%;
+      height: 100%;
+      min-height: 0;
+      background-color: var(--bg-slide);
+      background-image:
+        radial-gradient(ellipse 90% 55% at 18% -10%, rgba(110, 184, 232, 0.14) 0%, transparent 52%),
+        radial-gradient(ellipse 70% 45% at 92% 8%, rgba(167, 139, 250, 0.1) 0%, transparent 48%),
+        radial-gradient(ellipse 55% 40% at 50% 108%, rgba(110, 184, 232, 0.06) 0%, transparent 55%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.03) 0%, transparent 28%);
+      border-left: 4px solid var(--accent);
+    }
+
+    .slide-inner {
+      height: 100%;
+      width: 100%;
+      max-width: 72rem;
+      margin: 0 auto;
+      padding: clamp(1.25rem, 3vh, 2rem) clamp(1rem, 3vw, 2.5rem) calc(5.25rem + env(safe-area-inset-bottom, 0));
+      padding-top: max(clamp(1.25rem, 3vh, 2rem), env(safe-area-inset-top, 0));
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: clamp(0.85rem, 2vh, 1.35rem);
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+
+    .slide-head {
+      flex-shrink: 0;
+    }
+
+    .slide-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.28rem 0.65rem;
+      margin-bottom: 0.5rem;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #b8d9f5;
+      background: linear-gradient(135deg, rgba(110, 184, 232, 0.25), rgba(167, 139, 250, 0.15));
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 999px;
+    }
+
+    .slide-badge::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #7dd3a8;
+      box-shadow: 0 0 0 3px rgba(125, 211, 168, 0.25);
+    }
+
+    .slide-num {
+      position: absolute;
+      top: max(0.85rem, env(safe-area-inset-top, 0.85rem));
+      right: max(0.85rem, env(safe-area-inset-right, 0.85rem));
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+      padding: 0.35rem 0.6rem;
+      border-radius: 8px;
+      background: rgba(0, 0, 0, 0.22);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .slide-title {
+      margin: 0;
+      font-size: clamp(1.2rem, 3.4vw, 2rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.22;
+      color: #fff;
+    }
+
+    .slide-title span.accent {
+      color: var(--accent);
+    }
+
+    .slide-sub {
+      margin: 0.35rem 0 0;
+      font-size: clamp(0.85rem, 1.8vw, 1rem);
+      color: var(--muted);
+      font-weight: 500;
+      max-width: 42rem;
+    }
+
+    /* ——— Card grid ——— */
+    .card-grid {
+      display: grid;
+      gap: clamp(0.65rem, 1.6vw, 1rem);
+      width: 100%;
+      align-items: stretch;
+    }
+
+    .card-grid--2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .card-grid--3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .card-grid--1-2 {
+      grid-template-columns: 1fr;
+    }
+
+    @media (min-width: 720px) {
+      .card-grid--1-2 {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .card-grid--1-2 .v-card--span2 {
+        grid-column: span 2;
+      }
+    }
+
+    @media (max-width: 719px) {
+      .card-grid--2,
+      .card-grid--3 {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ——— Visual cards ——— */
+    .v-card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      border-radius: var(--radius);
+      border: 1px solid var(--card-edge);
+      background: var(--card);
+      box-shadow: var(--shadow-card);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      overflow: hidden;
+      min-height: 0;
+    }
+
+    .v-card__art {
+      position: relative;
+      height: clamp(4.5rem, 14vh, 7.25rem);
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+
+    .v-card__art::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 30%, rgba(14, 20, 30, 0.92) 100%);
+      pointer-events: none;
+    }
+
+    .v-card__art--media {
+      height: clamp(5.75rem, 20vh, 10.5rem);
+      background: #07090e;
+    }
+
+    .v-card__art--media img {
+      position: relative;
+      z-index: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .v-card--photo > .v-card__art {
+      background: #07090e !important;
+    }
+
+    .v-card__credit {
+      margin: 0.35rem 0 0;
+      font-size: 0.65rem;
+      line-height: 1.45;
+      color: rgba(148, 168, 189, 0.95);
+    }
+
+    .cover-hero {
+      margin: 0 auto 1.15rem;
+      width: 100%;
+      max-width: min(100%, 520px);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+      max-height: min(26vh, 220px);
+    }
+
+    .cover-hero img {
+      width: 100%;
+      height: min(26vh, 220px);
+      object-fit: cover;
+      display: block;
+    }
+
+    .cover-photo-cap {
+      margin: -0.25rem auto 0;
+      max-width: min(100%, 520px);
+      font-size: 0.72rem;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    .v-card__content {
+      padding: clamp(0.75rem, 2vw, 1.1rem) clamp(0.85rem, 2vw, 1.15rem) clamp(0.95rem, 2vw, 1.2rem);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    .v-card__kw {
+      display: inline-flex;
+      align-self: flex-start;
+      padding: 0.22rem 0.55rem;
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.92);
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 6px;
+    }
+
+    .v-card__title {
+      margin: 0;
+      font-size: clamp(0.95rem, 2vw, 1.12rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.3;
+      color: #fff;
+    }
+
+    .v-card__text {
+      margin: 0;
+      font-size: clamp(0.82rem, 1.75vw, 0.95rem);
+      line-height: 1.55;
+      color: #c8d5e3;
+    }
+
+    .v-card__text strong {
+      color: #dceaf8;
+      font-weight: 700;
+    }
+
+    /* Card art themes */
+    .v-card--cosmic .v-card__art {
+      background:
+        radial-gradient(circle at 28% 42%, rgba(255, 255, 255, 0.55) 0%, transparent 42%),
+        radial-gradient(circle at 72% 58%, rgba(110, 184, 232, 0.65) 0%, transparent 55%),
+        radial-gradient(circle at 50% 88%, rgba(167, 139, 250, 0.55) 0%, transparent 48%),
+        linear-gradient(155deg, #0f1c35 0%, #1a1140 100%);
+    }
+
+    .v-card--cool .v-card__art {
+      background:
+        linear-gradient(115deg, rgba(255, 255, 255, 0.22) 0%, transparent 46%),
+        radial-gradient(ellipse 120% 90% at 50% -10%, rgba(170, 220, 255, 0.45) 0%, transparent 62%),
+        linear-gradient(180deg, #153c55 0%, #0a141f 100%);
+    }
+
+    .v-card--fun .v-card__art {
+      background:
+        repeating-linear-gradient(-28deg, transparent, transparent 14px, rgba(255, 255, 255, 0.06) 14px, rgba(255, 255, 255, 0.06) 16px),
+        radial-gradient(circle at 80% 30%, rgba(255, 214, 140, 0.35) 0%, transparent 40%),
+        linear-gradient(145deg, #4a2f63 0%, #1e2438 100%);
+    }
+
+    .v-card--warp .v-card__art {
+      background:
+        radial-gradient(ellipse 80% 120% at 20% 50%, rgba(255, 120, 180, 0.35) 0%, transparent 55%),
+        radial-gradient(ellipse 70% 90% at 85% 40%, rgba(110, 184, 232, 0.45) 0%, transparent 50%),
+        conic-gradient(from 120deg at 50% 50%, #1a2030, #2a2348, #163040, #1a2030);
+    }
+
+    .v-card--drama .v-card__art {
+      background:
+        linear-gradient(90deg, rgba(0, 0, 0, 0.55) 0%, transparent 35%, transparent 65%, rgba(0, 0, 0, 0.55) 100%),
+        linear-gradient(180deg, #3b2a28 0%, #121820 100%);
+    }
+
+    .v-card--jelly .v-card__art {
+      background:
+        radial-gradient(circle at 40% 38%, rgba(255, 182, 214, 0.65) 0%, transparent 42%),
+        radial-gradient(circle at 68% 62%, rgba(182, 236, 222, 0.55) 0%, transparent 48%),
+        linear-gradient(165deg, #2d1f3d 0%, #142430 100%);
+    }
+
+    .v-card--glass .v-card__art {
+      background:
+        radial-gradient(circle at 18% 72%, rgba(255, 255, 255, 0.35) 0%, transparent 38%),
+        linear-gradient(135deg, rgba(180, 210, 240, 0.35) 0%, rgba(80, 140, 190, 0.15) 50%, transparent 100%),
+        linear-gradient(180deg, #253548 0%, #121820 100%);
+    }
+
+    .v-card--warm .v-card__art {
+      background:
+        radial-gradient(circle at 55% 35%, rgba(255, 214, 165, 0.45) 0%, transparent 50%),
+        linear-gradient(185deg, #4a3828 0%, #151820 100%);
+    }
+
+    .v-card--culture .v-card__art {
+      background:
+        linear-gradient(45deg, rgba(255, 59, 105, 0.35), transparent 42%),
+        linear-gradient(-35deg, rgba(255, 200, 80, 0.28), transparent 48%),
+        linear-gradient(160deg, #3d2050 0%, #132a35 100%);
+    }
+
+    .v-card--mint .v-card__art {
+      background:
+        radial-gradient(circle at 70% 28%, rgba(125, 211, 168, 0.45) 0%, transparent 45%),
+        linear-gradient(175deg, #1a3540 0%, #0f141e 100%);
+    }
+
+    .v-card--neutral .v-card__art {
+      background:
+        linear-gradient(140deg, rgba(255, 255, 255, 0.08) 0%, transparent 45%),
+        linear-gradient(180deg, #243042 0%, #121820 100%);
+    }
+
+    /* Cover */
+    .slide--cover {
+      text-align: center;
+      border-left: none;
+      background-image:
+        radial-gradient(ellipse 100% 65% at 50% -25%, rgba(110, 184, 232, 0.35) 0%, transparent 58%),
+        radial-gradient(ellipse 80% 50% at 100% 20%, rgba(167, 139, 250, 0.18) 0%, transparent 50%),
+        radial-gradient(ellipse 70% 55% at 0% 75%, rgba(125, 211, 168, 0.12) 0%, transparent 52%),
+        linear-gradient(185deg, #0b1220 0%, var(--bg) 100%);
+    }
+
+    .slide--cover .slide-inner {
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: clamp(1rem, 3vh, 1.75rem);
+    }
+
+    .cover-card {
+      width: min(36rem, 100%);
+      padding: clamp(1.5rem, 4vw, 2.25rem);
+      border-radius: calc(var(--radius) + 4px);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: linear-gradient(155deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.03));
+      box-shadow: var(--shadow-card), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+
+    .slide--cover h1 {
+      margin: 0 0 0.65rem;
+      font-size: clamp(1.65rem, 5vw, 2.85rem);
+      font-weight: 800;
+      letter-spacing: -0.035em;
+      line-height: 1.15;
+    }
+
+    .slide--cover .subtitle {
+      margin: 0 0 1.25rem;
+      font-size: clamp(1rem, 2.3vw, 1.3rem);
+      color: #c5d6e8;
+      font-weight: 600;
+    }
+
+    .slide--cover .source-line {
+      margin: 0;
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .cover-preview {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.55rem;
+      margin-top: 1.15rem;
+      width: 100%;
+    }
+
+    @media (max-width: 520px) {
+      .cover-preview {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .cover-mini {
+      border-radius: var(--radius-sm);
+      padding: 0.65rem 0.7rem;
+      text-align: left;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(0, 0, 0, 0.22);
+    }
+
+    .cover-mini__tag {
+      font-size: 0.62rem;
+      font-weight: 800;
+      letter-spacing: 0.07em;
+      color: var(--accent);
+      margin-bottom: 0.25rem;
+    }
+
+    .cover-mini__txt {
+      margin: 0;
+      font-size: 0.78rem;
+      color: #b9cad9;
+      line-height: 1.45;
+    }
+
+    .slide--appendix .v-card__art,
+    .slide--refs .v-card__art {
+      height: clamp(3.25rem, 9vh, 4.5rem);
+    }
+
+    /* ——— Chrome ——— */
+    .chrome {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.65rem;
+      padding: 0.55rem max(0.65rem, env(safe-area-inset-right, 0.65rem)) max(0.55rem, env(safe-area-inset-bottom, 0.55rem))
+        max(0.65rem, env(safe-area-inset-left, 0.65rem));
+      background: var(--chrome-bg);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-top: 1px solid rgba(255, 255, 255, 0.07);
+    }
+
+    .chrome-hint {
+      font-size: 0.7rem;
+      color: var(--muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 42vw;
+    }
+
+    @media (max-width: 520px) {
+      .chrome-hint {
+        display: none;
+      }
+    }
+
+    .chrome-counter {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--text);
+      min-width: 4.25rem;
+      text-align: center;
+    }
+
+    .chrome-counter span {
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .chrome-nav {
+      display: flex;
+      gap: 0.45rem;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .btn-nav {
+      appearance: none;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text);
+      font: inherit;
+      font-size: 0.82rem;
+      font-weight: 700;
+      padding: 0.48rem 0.85rem;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    .btn-nav:hover:not(:disabled) {
+      background: var(--accent-soft);
+      border-color: rgba(110, 184, 232, 0.45);
+    }
+
+    .btn-nav:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+
+    .btn-fs {
+      font-size: 0.78rem;
+      padding: 0.48rem 0.62rem;
+    }
+
+    .hit-zone {
+      position: fixed;
+      top: 0;
+      bottom: 4rem;
+      width: 22%;
+      max-width: 140px;
+      z-index: 5;
+      cursor: pointer;
+      border: none;
+      padding: 0;
+      background: transparent;
+    }
+
+    .hit-zone--prev {
+      left: 0;
+    }
+
+    .hit-zone--next {
+      right: 0;
+    }
+
+    @media (max-width: 768px) {
+      .hit-zone {
+        width: 26%;
+        max-width: 96px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .deck-track {
+        transition: none;
+      }
+    }
+
+    @media print {
+      body {
+        overflow: visible;
+        background: #fff;
+        color: #111;
+      }
+
+      .chrome,
+      .hit-zone {
+        display: none !important;
+      }
+
+      .deck {
+        position: static;
+        overflow: visible;
+      }
+
+      .deck-track {
+        display: block;
+        transform: none !important;
+        width: auto !important;
+        height: auto !important;
+      }
+
+      .slide {
+        page-break-after: always;
+        page-break-inside: avoid;
+        min-height: 100vh;
+        height: auto;
+        border-left: 4px solid #2a6f9e;
+        background: #fff !important;
+        flex: none;
+        width: auto !important;
+      }
+
+      .slide:last-child {
+        page-break-after: auto;
+      }
+
+      .slide--cover {
+        border-left: none;
+      }
+
+      .slide-inner {
+        padding: 2rem;
+        max-width: none;
+      }
+
+      .v-card {
+        background: #f7f9fb;
+        border-color: #dde5ee;
+        box-shadow: none;
+        backdrop-filter: none;
+      }
+
+      .v-card__text,
+      .slide-sub {
+        color: #444;
+      }
+
+      .v-card__title,
+      .slide-title,
+      .slide--cover h1 {
+        color: #111;
+      }
+
+      a {
+        color: #0b5cab;
+      }
+
+      .slide-num {
+        color: #555;
+        background: #eee;
+        border-color: #ddd;
+      }
+
+      .cover-photo-cap,
+      .v-card__credit {
+        color: #666;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="deck" id="deck" role="application" aria-roledescription="슬라이드쇼" aria-label="2026 디자인 트렌드 분석">
+    <div class="deck-track" id="deckTrack">
+      <!-- 1 -->
+      <section class="slide slide--cover" id="s-1" aria-label="표지">
+        <div class="slide-inner">
+          <div class="cover-card">
+            <span class="slide-badge">부서 공유 자료</span>
+            <figure class="cover-hero">
+              <img
+                src="https://design-plus.storage.googleapis.com/wp-content/uploads/2025/12/01212753/main11.jpg"
+                width="1440"
+                height="720"
+                alt="Design＋ 기사 「키워드로 살펴본 2026 디자인 트렌드」 대표 삽화"
+                decoding="async"
+              />
+            </figure>
+            <p class="cover-photo-cap">삽화: 기사 원문 · Design＋ · 원저작 핀터레스트·캔바 자료 편집 인용</p>
+            <h1>2026 디자인 트렌드 분석</h1>
+            <p class="subtitle">불확실성 시대의 2026 시각 전략 · 3축 재정리</p>
+            <p class="source-line">
+              근거: Design＋
+              <a href="https://design.co.kr/article/142896/">「키워드로 살펴본 2026 디자인 트렌드」</a>
+            </p>
+            <div class="cover-preview" aria-hidden="true">
+              <div class="cover-mini">
+                <div class="cover-mini__tag">AXIS 01</div>
+                <p class="cover-mini__txt">현실 비틀기 · 초현실 연출</p>
+              </div>
+              <div class="cover-mini">
+                <div class="cover-mini__tag">AXIS 02</div>
+                <p class="cover-mini__txt">촉각 회귀 · 하이퍼 물성</p>
+              </div>
+              <div class="cover-mini">
+                <div class="cover-mini__tag">AXIS 03</div>
+                <p class="cover-mini__txt">느린 경험 · 문화적 맥시멀</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2 -->
+      <section class="slide" id="s-2" aria-label="분석 범위">
+        <span class="slide-num" aria-hidden="true">2 / 16</span>
+        <div class="slide-inner">
+          <header class="slide-head">
+            <span class="slide-badge">내부 공유</span>
+            <h2 class="slide-title">분석 <span class="accent">범위</span></h2>
+            <p class="slide-sub">
+              근거는 Design＋ 기사 한 편에 소개된 <strong>핀터레스트 21개·캔바 10개 키워드</strong>입니다. 본 자료는 전수 번역이 아니라, 기사에서 반복적으로 강조된 시각 패턴을 실무 관점으로 재해석한 요약입니다.
+            </p>
+          </header>
+          <div class="card-grid card-grid--2">
+            <article class="v-card v-card--neutral v-card--photo">
+              <div class="v-card__art v-card__art--media">
+                <img
+                  src="https://design-plus.storage.googleapis.com/wp-content/uploads/2025/12/01212750/2-12-832x524.jpg"
+                  width="832"
+                  height="524"
+                  alt="캔바가 제시한 2026 트렌드 키워드 비주얼"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div class="v-card__content">
+                <span class="v-card__kw">Canva · Scope</span>
+                <h3 class="v-card__title">캔바 키워드 축</h3>
+                <p class="v-card__text">캔바 키워드 10개 중 <strong>Reality Warp, Drama Club, Texture Check, Zinegeist, Block Party, Grannywave</strong> 축을 우선 분석합니다.</p>
+                <p class="v-card__credit">삽화: 기사 내 캔바 제공 · Design＋</p>
+              </div>
+            </article>
+            <article class="v-card v-card--cool v-card--photo">
+              <div class="v-card__art v-card__art--media">
+                <img
+                  src="https://design-plus.storage.googleapis.com/wp-content/uploads/2025/12/01212747/6-11-832x1076.jpg"
+                  width="832"
+                  height="1076"
+                  alt="핀터레스트가 제시한 2026 트렌드 키워드 비주얼"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div class="v-card__content">
+                <span class="v-card__kw">Pinterest · Scope</span>
+                <h3 class="v-card__title">핀터레스트 키워드 축</h3>
+                <p class="v-card__text">핀터레스트 21개 키워드 중 <strong>Extra Celestial, Cool Blue, FunHaus, Gimme Gummy, Pen Pals, Glamoratti, Laced Up</strong>를 핵심으로 봅니다.</p>
+                <p class="v-card__credit">삽화: 기사 내 핀터레스트 제공 · Design＋</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3 -->
+      <section class="slide" id="s-3" aria-label="주요 트렌드">
+        <span class="slide-num" aria-hidden="true">3 / 16</span>
+        <div class="slide-inner">
+          <header class="slide-head">
+            <span class="slide-badge">내부 공유</span>
+            <h2 class="slide-title">2026 변화의 <span class="accent">핵심 가설</span></h2>
+            <p class="slide-sub">이번 흐름은 유행 목록보다, 불안정한 시대를 다루는 시각적 대응 전략으로 읽는 것이 더 정확합니다.</p>
+          </header>
+          <div class="card-grid card-grid--3">
+            <article class="v-card v-card--neutral v-card--photo">
+              <div class="v-card__art v-card__art--media">
+                <img
+                  src="https://design-plus.storage.googleapis.com/wp-content/uploads/2025/12/24002922/1-10-832x1077.jpg"
+                  width="832"
+                  height="1077"
+                  alt="기사 속 무드 레퍼런스 삽화"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div class="v-card__content">
+                <span class="v-card__kw">CONTEXT</span>
+                <h3 class="v-card__title">배경: 예측 불가능의 상시화</h3>
+                <p class="v-card__text">경제·기후·기술 변수로 '안정된 미래'를 전제로 한 미감이 약해지고 있습니다.</p>
+                <p class="v-card__credit">삽화: 기사 원문 · Design＋</p>
+              </div>
+            </article>
+            <article class="v-card v-card--warp v-card--photo">
+              <div class="v-card__art v-card__art--media">
+                <img
+                  src="https://design-plus.storage.googleapis.com/wp-content/uploads/2025/12/01212742/15-7-832x658.jpg"
+                  width="832"
+                  height="658"
+                  alt="리얼리티 워프·드라마 클럽 무드 삽화"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div class="v-card__content">
+                <span class="v-card__kw">VISUAL</span>
+                <h3 class="v-card__title">반응 1: 현실의 감각적 재편집</h3>
+                <p class="v-card__text">정확한 재현보다 <strong>어긋남·과장·연극성</strong>으로 현실을 다시 구성합니다.</p>
+                <p class="v-card__credit">삽화: 기사 내 캔바 제공 · Design＋</p>
+              </div>
+            </article>
+            <article class="v-card v-card--cool v-card--photo">
+              <div class="v-card__art v-card__art--media">
+                <img
+                  src="https://design-plus.storage.googleapis.com/wp-content/uploads/2025/12/01212744/9-7-832x1076.jpg"
+                  width="832"
+                  height="1076"
+                  alt="쿨 블루·펀하우스 키 비주얼"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div class="v-card__content">
+                <span class="v-card__kw">AUDIENCE</span>
+                <h3 class="v-card__title">반응 2: 해석 가능한 장면 선호</h3>
+                <p class="v-card__text">Z·밀레니얼은 명확한 답보다 <strong>참여 가능한 미완성 감각</strong>에 더 반응합니다.</p>
+                <p class="v-card__credit">삽화: 기사 내 핀터레스트 제공 · Design＋</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4 -->
+      <section class="slide" id="s-4" aria-label="세 가지 큰 축">
+        <span class="slide-num" aria-hidden="true">4 / 16</span>
+        <div class="slide-inner">
+          <header class="slide-head">
+            <span class="slide-badge">내부 공유</span>
+            <h2 class="slide-title">재분석 <span class="accent">3축</span></h2>
+            <p class="slide-sub">키워드 이름이 달라도 결과적으로 같은 방향으로 수렴하는 3가지 흐름입니다.</p>
+          </header>
+          <div class="card-grid card-grid--3">
+            <article class="v-card v-card--cosmic v-card--photo">
+              <div class="v-card__art v-card__art--media">
+                <img
+                  src="https://design-plus.storage.googleapis.com/wp-content/uploads/2025/12/24002928/3-12-832x1076.jpg"
+                  width="832"
+                  height="1076"
+                  alt="Extra Celestial 초월적 셀레스티얼 키 비주얼"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div class="v-card__content">
+                <span class="v-card__kw">01</span>
+                <h3 class="v-card__title">비현실·초현실 비주얼</h3>
+                <p class="v-card__text">워프·셀레스티얼·드라마 클럽으로 이어지는 <strong>인지 교란형 연출</strong>.</p>
+                <p class="v-card__credit">삽화: 기사 내 핀터레스트 제공 · Design＋</p>
+              </div>
+            </article>
+            <article class="v-card v-card--jelly v-card--photo">
+              <div class="v-card__art v-card__art--media">
+                <img
+                  src="https://design-plus.storage.googleapis.com/wp-content/uploads/2025/12/24002935/14-7-832x1076.jpg"
+                  width="832"
+                  height="1076"
+                  alt="질감·젤리 무드 삽화"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div class="v-card__content">
+                <span class="v-card__kw">02</span>
+                <h3 class="v-card__title">촉각·질감 중심</h3>
+                <p class="v-card__text">평면 화면에서 다시 촉감을 만들려는 <strong>물성 중심 인터페이스</strong>.</p>
+                <p class="v-card__credit">삽화: 기사 원문 · Design＋</p>
+              </div>
+            </article>
+            <article class="v-card v-card--warm v-card--photo">
+              <div class="v-card__art v-card__art--media">
+                <img
+                  src="https://design-plus.storage.googleapis.com/wp-content/uploads/2025/12/01212738/13-9-832x546.jpg"
+                  width="832"
+                  height="546"
+                  alt="아날로그·에디토리얼 무드 삽화"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div class="v-card__content">
+                <span class="v-card__kw">03</span>
+                <h3 class="v-card__title">느림·레트로·문화 밀도</h3>
+                <p class="v-card__text">편지·진·콜라주·과장된 장식으로 <strong>시간성과 문화 맥락</strong>을 복원.</p>
+                <p class="v-card__credit">삽화: 기사 원문 · Design＋</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5 -->
+      <section class="slide" id="s-5" aria-label="축1 핀터레스트">
+        <span class="slide-num" aria-hidden="true">5 / 16</span>
+        <div class="slide-inner">
+          <header class="slide-head">
+            <span class="slide-badge">AXIS 01 · Pinterest</span>
+            <h2 class="slide-title">비현실 비주얼 <span class="accent">— Pinterest</span></h2>
+          </header>
+          <div class="card-grid card-grid--3">
+            <article class="v-card v-card--cosmic v-card--photo">
+              <div class="v-card__art v-card__art--media">
+                <img
+                  src="https://design-plus.storage.googleapis.com/wp-content/uploads/2025/12/24002928/3-12-832x1076.jpg"
+                  width="832"
+                  height="1076"
+                  alt="Extra Celestial 키 비주얼"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div class="v-card__content">
+                <span class="v-card__kw">Extra Celestial</span>
+                <h3 class="v-card__title">초월적 셀레스티얼</h3>
+                <p class="v-card__text">기술 상상력과 판타지를 결합해, 현실 회피가 아닌 <strong>현실 재해석의 무대</strong>를 만듭니다.</p>
+                <p class="v-card__credit">삽화: 기사 내 핀터레스트 제공 · Design＋</p>
+              </div>
+            </article>
+            <article class="v-card v-card--cool v-card--photo">
+              <div class="v-card__art v-card__art--media">
+                <img
+                  src="https://design-plus.storage.googleapis.com/wp-content/uploads/2025/12/01212744/9-7-832x1076.jpg"
+                  width="832"
+                  height="1076"
+                  alt="쿨 블루·펀하우스 키 비주얼"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div class="v-card__content">
+                <span class="v-card__kw">Cool Blue</span>
+                <h3 class="v-card__title">쿨 블루 태도</h3>
+                <p class="v-card__text">차가운 톤은 감정 결핍이 아니라 <strong>과잉 자극 시대의 감각적 거리두기</strong>에 가깝습니다.</p>
+                <p class="v-card__credit">삽화: 기사 내 핀터레스트 제공 · Design＋</p>
+              </div>
+            </article>
+            <article class="v-card v-card--fun v-card--photo">
+              <div class="v-card__art v-card__art--media">
+                <img
+                  src="https://design-plus.storage.googleapis.com/wp-content/uploads/2025/12/01212732/KakaoTalk_20251219_163956013_04-1.gif"
+                  width="568"
+                  height="314"
+                  alt="펀하우스·스트라이프 무드 움짤"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div class="v-card__content">
+                <span class="v-card__kw">FunHaus</span>
+                <h3 class="v-card__title">펀하우스 데코</h3>
+                <p class="v-card__text">과장과 유머를 쓰되 색채를 통제해, '이상함'을 <strong>브랜드 문법</strong>으로 만드는 전략입니다.</p>
+                <p class="v-card__credit">삽화: 기사 편집 · Design＋</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- 6 -->
+      <section class="slide" id="s-6" aria-label="축1 캔바">
+        <span class="slide-num" aria-hidden="true">6 / 16</span>
+        <div class="slide-inner">
+          <header class="slide-head">
+            <span class="slide-badge">AXIS 01 · Canva</span>
+            <h2 class="slide-title">비현실 비주얼 <span class="accent">— Canva</span></h2>
+          </header>
+          <div class="card-grid card-grid--3">
+            <article class="v-card v-card--warp v-card--photo">
+              <div class="v-card__art v-card__art--media">
+                <img
+                  src="https://design-plus.storage.googleapis.com/wp-content/uploads/2025/12/01212742/15-7-832x658.jpg"
+                  width="832"
+                  height="658"
+                  alt="리얼리티 워프·드라마 클럽 비주얼"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div class="v-card__content">
+                <span class="v-card__kw">Reality Warp</span>
+                <h3 class="v-card__title">리얼리티 워프</h3>
+                <p class="v-card__text">왜곡·이질 이미지·몽환 구성으로 <strong>매끈한 정답형 화면</strong>을 의도적으로 깨뜨립니다.</p>
+                <p class="v-card__credit">삽화: 기사 내 캔바 제공 · Design＋</p>
+              </div>
+            </article>
+            <article class="v-card v-card--drama v-card--photo">
+              <div class="v-card__art v-card__art--media">
+                <img
+                  src="https://design-plus.storage.googleapis.com/wp-content/uploads/2025/12/01212741/KakaoTalk_20251219_163956013_05.gif"
+                  width="568"
+                  height="314"
+                  alt="시네마틱 무드 움짤"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div class="v-card__content">
+                <span class="v-card__kw">Drama Club</span>
+                <h3 class="v-card__title">드라마 클럽</h3>
+                <p class="v-card__text">세트 디자인과 시네마틱 타이포로 일상을 <strong>콘텐츠 장면</strong>으로 전환합니다.</p>
+                <p class="v-card__credit">삽화: 기사 편집 · Design＋</p>
+              </div>
+            </article>
+            <article class="v-card v-card--neutral v-card--photo">
+              <div class="v-card__art v-card__art--media">
+                <img
+                  src="https://design-plus.storage.googleapis.com/wp-content/uploads/2025/12/01212738/KakaoTalk_20251219_163956013_02.gif"
+                  width="568"
+                  height="314"
+                  alt="왜곡·글리치 무드 움짤"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div class="v-card__content">
+                <span class="v-card__kw">TAKE</span>
+                <h3 class="v-card__title">약간의 어긋남</h3>
+                <p class="v-card__text">핵심은 결함이 아니라 의도된 어긋남입니다. <strong>인간적인 온도</strong>를 만드는 연출 장치로 작동합니다.</p>
+                <p class="v-card__credit">삽화: 기사 편집 · Design＋</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- 7 -->
+      <section class="slide" id="s-7" aria-label="축2 질감 촉각">
+        <span class="slide-num" aria-hidden="true">7 / 16</span>
+        <div class="slide-inner">
+          <header class="slide-head">
+            <span class="slide-badge">AXIS 02</span>
+            <h2 class="slide-title">질감·촉각 <span class="accent">— 공통 화두</span></h2>
+          </header>
+          <div class="card-grid card-grid--3">
+            <article class="v-card v-card--glass v-card--photo">
+              <div class="v-card__art v-card__art--media">
+                <img
+                  src="https://design-plus.storage.googleapis.com/wp-content/uploads/2025/12/01212738/13-9-832x546.jpg"
+                  width="832"
+                  height="546"
+                  alt="질감·유리·텍스처 무드 삽화"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div class="v-card__content">
+                <span class="v-card__kw">SHIFT</span>
+                <h3 class="v-card__title">보기 → 느끼기</h3>
+                <p class="v-card__text">시각 피로가 누적되며, 디자인 평가 기준이 '잘 보임'에서 <strong>'만져질 것 같은 느낌'</strong>으로 이동합니다.</p>
+                <p class="v-card__credit">삽화: 기사 원문 · Design＋</p>
+              </div>
+            </article>
+            <article class="v-card v-card--jelly v-card--photo">
+              <div class="v-card__art v-card__art--media">
+                <img
+                  src="https://design-plus.storage.googleapis.com/wp-content/uploads/2025/12/01212743/KakaoTalk_20251219_163956013_01.gif"
+                  width="568"
+                  height="314"
+                  alt="젤리·촉각 무드 움짤"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div class="v-card__content">
+                <span class="v-card__kw">MOOD</span>
+                <h3 class="v-card__title">말랑함의 심리 효과</h3>
+                <p class="v-card__text">젤리 질감은 단순 유희가 아니라, 긴장 완화와 정서 안정에 반응하는 <strong>감정 인터페이스</strong>로 읽힙니다.</p>
+                <p class="v-card__credit">삽화: 기사 편집 · Design＋</p>
+              </div>
+            </article>
+            <article class="v-card v-card--cool v-card--photo">
+              <div class="v-card__art v-card__art--media">
+                <img
+                  src="https://design-plus.storage.googleapis.com/wp-content/uploads/2025/12/24002942/17-7-832x1076.jpg"
+                  width="832"
+                  height="1076"
+                  alt="텍스처 중심 비주얼 삽화"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div class="v-card__content">
+                <span class="v-card__kw">TECH</span>
+                <h3 class="v-card__title">도구 접근성</h3>
+                <p class="v-card__text">CGI·3D 도구 보급이 물성 표현의 제작비를 낮추며, <strong>텍스처 중심 비주얼</strong>을 대중화했습니다.</p>
+                <p class="v-card__credit">삽화: 기사 원문 · Design＋</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- 8 -->
+      <section class="slide" id="s-8" aria-label="축2 키워드">
+        <span class="slide-num" aria-hidden="true">8 / 16</span>
+        <div class="slide-inner">
+          <header class="slide-head">
+            <span class="slide-badge">AXIS 02 · Keywords</span>
+            <h2 class="slide-title">키워드 <span class="accent">— 핀터레스트·캔바</span></h2>
+          </header>
+          <div class="card-grid card-grid--2">
+            <article class="v-card v-card--jelly v-card--photo">
+              <div class="v-card__art v-card__art--media">
+                <img
+                  src="https://design-plus.storage.googleapis.com/wp-content/uploads/2025/12/24002935/14-7-832x1076.jpg"
+                  width="832"
+                  height="1076"
+                  alt="기미 구미 관련 핀터레스트 무드 삽화"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div class="v-card__content">
+                <span class="v-card__kw">Pinterest · Gimme Gummy</span>
+                <h3 class="v-card__title">기미 구미</h3>
+                <p class="v-card__text">폰 케이스·뷰티·주얼리·스낵까지, '탱글함' 자체가 가치가 되는 <strong>촉각 집착형 소비</strong>가 확산됩니다.</p>
+                <p class="v-card__credit">삽화: 기사 원문 · Design＋ · 원저작 핀터레스트</p>
+              </div>
+            </article>
+            <article class="v-card v-card--glass v-card--photo">
+              <div class="v-card__art v-card__art--media">
+                <img
+                  src="https://design-plus.storage.googleapis.com/wp-content/uploads/2025/12/24002942/17-7-832x1076.jpg"
+                  width="832"
+                  height="1076"
+                  alt="텍스처 체크 캔바 비주얼"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div class="v-card__content">
+                <span class="v-card__kw">Canva · Texture Check</span>
+                <h3 class="v-card__title">텍스처 체크</h3>
+                <p class="v-card__text">매트 종이·액체 유리·유광 플라스틱처럼 재질 감각을 전면화해, <strong>디지털 화면의 촉감 결핍</strong>을 보완합니다.</p>
+                <p class="v-card__credit">삽화: 기사 내 캔바 제공 · Design＋</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- 9 -->
+      <section class="slide" id="s-9" aria-label="축3 느림 손맛">
+        <span class="slide-num" aria-hidden="true">9 / 16</span>
+        <div class="slide-inner">
+          <header class="slide-head">
+            <span class="slide-badge">AXIS 03</span>
+            <h2 class="slide-title">느림·손맛 <span class="accent">회귀</span></h2>
+          </header>
+          <div class="card-grid card-grid--2">
+            <article class="v-card v-card--warm v-card--photo">
+              <div class="v-card__art v-card__art--media">
+                <img
+                  src="https://design-plus.storage.googleapis.com/wp-content/uploads/2025/12/01213852/main1-768x960.jpg"
+                  width="768"
+                  height="960"
+                  alt="편지·스테이셔너리 에디토리얼 삽화"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div class="v-card__content">
+                <span class="v-card__kw">Pen Pals</span>
+                <h3 class="v-card__title">펜 팔스</h3>
+                <p class="v-card__text">빠른 메신저 시대에 역설적으로, 느린 우편과 문구 소비가 <strong>의식적 경험</strong>으로 재부상합니다.</p>
+                <p class="v-card__credit">삽화: 기사 원문 · Design＋ · 원저작 핀터레스트</p>
+              </div>
+            </article>
+            <article class="v-card v-card--culture v-card--photo">
+              <div class="v-card__art v-card__art--media">
+                <img
+                  src="https://design-plus.storage.googleapis.com/wp-content/uploads/2025/12/01212734/KakaoTalk_20251219_163956013_06.gif"
+                  width="568"
+                  height="314"
+                  alt="진·레이어 타이포 무드 움짤"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div class="v-card__content">
+                <span class="v-card__kw">Zinegeist</span>
+                <h3 class="v-card__title">진가이스트</h3>
+                <p class="v-card__text">대형 타이포와 중첩 텍스처가 화면에 인쇄물의 기세를 이식해 <strong>디지털의 체온</strong>을 높입니다.</p>
+                <p class="v-card__credit">삽화: 기사 편집 · Design＋</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- 10 -->
+      <section class="slide" id="s-10" aria-label="축3 레트로 맥시멀">
+        <span class="slide-num" aria-hidden="true">10 / 16</span>
+        <div class="slide-inner">
+          <header class="slide-head">
+            <span class="slide-badge">AXIS 03 · Pinterest</span>
+            <h2 class="slide-title">레트로·맥시멀</h2>
+          </header>
+          <div class="card-grid card-grid--2">
+            <article class="v-card v-card--drama v-card--photo">
+              <div class="v-card__art v-card__art--media">
+                <img
+                  src="https://design-plus.storage.googleapis.com/wp-content/uploads/2025/12/24002944/image-1.jpeg"
+                  width="832"
+                  height="1077"
+                  alt="글래머라티·레이스 업 키 비주얼"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div class="v-card__content">
+                <span class="v-card__kw">Glamoratti</span>
+                <h3 class="v-card__title">글래머라티</h3>
+                <p class="v-card__text">숄더 라인·퍼널 넥·볼드 주얼리로 미니멀 이후의 반작용인 <strong>과시적 실루엣</strong>이 강화됩니다.</p>
+                <p class="v-card__credit">삽화: 기사 내 핀터레스트 제공 · Design＋</p>
+              </div>
+            </article>
+            <article class="v-card v-card--fun v-card--photo">
+              <div class="v-card__art v-card__art--media">
+                <img
+                  src="https://design-plus.storage.googleapis.com/wp-content/uploads/2025/12/24002944/image-1.jpeg"
+                  width="832"
+                  height="1077"
+                  alt="레이스 디테일 키 비주얼"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div class="v-card__content">
+                <span class="v-card__kw">Laced Up</span>
+                <h3 class="v-card__title">레이스 업</h3>
+                <p class="v-card__text">도일리 레이스·크로셰처럼 수공예 디테일이 일상 아이템으로 내려오며, 장식의 과감함이 다시 <strong>정상값</strong>이 됩니다.</p>
+                <p class="v-card__credit">삽화: 기사 내 핀터레스트 제공 · Design＋</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- 11 -->
+      <section class="slide" id="s-11" aria-label="축3 문화 콜라주">
+        <span class="slide-num" aria-hidden="true">11 / 16</span>
+        <div class="slide-inner">
+          <header class="slide-head">
+            <span class="slide-badge">AXIS 03 · Canva</span>
+            <h2 class="slide-title">문화·콜라주</h2>
+          </header>
+          <div class="card-grid card-grid--2">
+            <article class="v-card v-card--culture v-card--photo">
+              <div class="v-card__art v-card__art--media">
+                <img
+                  src="https://design-plus.storage.googleapis.com/wp-content/uploads/2025/12/01212734/KakaoTalk_20251219_163956013_03.gif"
+                  width="568"
+                  height="314"
+                  alt="블록 파티·콜라주 무드 움짤"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div class="v-card__content">
+                <span class="v-card__kw">Block Party</span>
+                <h3 class="v-card__title">블록 파티</h3>
+                <p class="v-card__text">지역 문화와 전통 시각 자산을 콜라주·고채도로 재배치해, 과거를 <strong>현재형 아이덴티티</strong>로 재가동합니다.</p>
+                <p class="v-card__credit">삽화: 기사 편집 · Design＋ · 원저작 캔바</p>
+              </div>
+            </article>
+            <article class="v-card v-card--warp v-card--photo">
+              <div class="v-card__art v-card__art--media">
+                <img
+                  src="https://design-plus.storage.googleapis.com/wp-content/uploads/2025/12/01212738/KakaoTalk_20251219_163956013_02.gif"
+                  width="568"
+                  height="314"
+                  alt="그래니웨이브 밀도 무드 움짤"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div class="v-card__content">
+                <span class="v-card__kw">Grannywave</span>
+                <h3 class="v-card__title">그래니웨이브</h3>
+                <p class="v-card__text">과장된 색·패턴·중첩 레이어는 미니멀 피로에 대한 반응이자, 문화 자신감을 드러내는 <strong>맥시멀 선언</strong>입니다.</p>
+                <p class="v-card__credit">삽화: 기사 편집 · Design＋ · 원저작 캔바</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- 12 -->
+      <section class="slide" id="s-12" aria-label="핀터레스트 대 캔바">
+        <span class="slide-num" aria-hidden="true">12 / 16</span>
+        <div class="slide-inner">
+          <header class="slide-head">
+            <span class="slide-badge">COMPARE</span>
+            <h2 class="slide-title">핀터레스트 <span class="accent">vs</span> 캔바</h2>
+          </header>
+          <div class="card-grid card-grid--1-2">
+            <article class="v-card v-card--cool v-card--photo">
+              <div class="v-card__art v-card__art--media">
+                <img
+                  src="https://design-plus.storage.googleapis.com/wp-content/uploads/2025/12/01212747/6-11-832x1076.jpg"
+                  width="832"
+                  height="1076"
+                  alt="핀터레스트 2026 키워드 비주얼"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div class="v-card__content">
+                <span class="v-card__kw">Pinterest</span>
+                <h3 class="v-card__title">생활 전반 확장형</h3>
+                <p class="v-card__text">패션·홈·뷰티·소품까지 횡단하며, 트렌드가 <strong>라이프스타일 전체</strong>로 번집니다.</p>
+                <p class="v-card__credit">삽화: 기사 내 핀터레스트 제공 · Design＋</p>
+              </div>
+            </article>
+            <article class="v-card v-card--warp v-card--photo">
+              <div class="v-card__art v-card__art--media">
+                <img
+                  src="https://design-plus.storage.googleapis.com/wp-content/uploads/2025/12/01212750/2-12-832x524.jpg"
+                  width="832"
+                  height="524"
+                  alt="캔바 2026 키워드 비주얼"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div class="v-card__content">
+                <span class="v-card__kw">Canva</span>
+                <h3 class="v-card__title">제작 언어 정교화형</h3>
+                <p class="v-card__text">타이포·텍스처·구성법 중심으로, 실제 제작 단계에서 적용 가능한 <strong>표현 문법</strong>을 제공합니다.</p>
+                <p class="v-card__credit">삽화: 기사 내 캔바 제공 · Design＋</p>
+              </div>
+            </article>
+            <article class="v-card v-card--mint v-card--span2 v-card--photo">
+              <div class="v-card__art v-card__art--media">
+                <img
+                  src="https://design-plus.storage.googleapis.com/wp-content/uploads/2025/12/01212753/main11-1000x500.jpg"
+                  width="1000"
+                  height="500"
+                  alt="2026 디자인 트렌드 무드 썸네일"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div class="v-card__content">
+                <span class="v-card__kw">COMMON</span>
+                <h3 class="v-card__title">공통 결론</h3>
+                <p class="v-card__text">두 플랫폼 모두 완벽한 정돈보다 <strong>비틀기·물성·시간성</strong>으로 감각 균형을 되찾는 방향입니다.</p>
+                <p class="v-card__credit">삽화: Design＋ 기사 「키워드로 살펴본 2026 디자인 트렌드」</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- 13 -->
+      <section class="slide" id="s-13" aria-label="실무 시사 디자이너 브랜드">
+        <span class="slide-num" aria-hidden="true">13 / 16</span>
+        <div class="slide-inner">
+          <header class="slide-head">
+            <span class="slide-badge">실무 시사</span>
+            <h2 class="slide-title">디자이너·브랜드에 <span class="accent">바로 쓰기</span></h2>
+          </header>
+          <div class="card-grid card-grid--3">
+            <article class="v-card v-card--warp v-card--photo">
+              <div class="v-card__art v-card__art--media">
+                <img
+                  src="https://design-plus.storage.googleapis.com/wp-content/uploads/2025/12/01212742/15-7-832x658.jpg"
+                  width="832"
+                  height="658"
+                  alt="왜곡·드라마 무드 레퍼런스"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div class="v-card__content">
+                <span class="v-card__kw">컨셉</span>
+                <h3 class="v-card__title">브랜드 장면은 '해석 가능'하게</h3>
+                <p class="v-card__text">정답형 메시지보다, 사용자가 의미를 덧붙일 여지가 있는 <strong>미완 장면</strong>이 참여를 높입니다.</p>
+                <p class="v-card__credit">삽화: 기사 내 캔바 제공 · Design＋</p>
+              </div>
+            </article>
+            <article class="v-card v-card--cool v-card--photo">
+              <div class="v-card__art v-card__art--media">
+                <img
+                  src="https://design-plus.storage.googleapis.com/wp-content/uploads/2025/12/01212744/9-7-832x1076.jpg"
+                  width="832"
+                  height="1076"
+                  alt="쿨 블루 무드 레퍼런스"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div class="v-card__content">
+                <span class="v-card__kw">색·태도</span>
+                <h3 class="v-card__title">쿨함과 유머를 동시 설계</h3>
+                <p class="v-card__text">거리감 있는 색조와 과장된 연출을 함께 쓰고, 팔레트 규칙으로 <strong>브랜드 일관성</strong>을 유지합니다.</p>
+                <p class="v-card__credit">삽화: 기사 내 핀터레스트 제공 · Design＋</p>
+              </div>
+            </article>
+            <article class="v-card v-card--glass v-card--photo">
+              <div class="v-card__art v-card__art--media">
+                <img
+                  src="https://design-plus.storage.googleapis.com/wp-content/uploads/2025/12/24002942/17-7-832x1076.jpg"
+                  width="832"
+                  height="1076"
+                  alt="텍스처 레퍼런스"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div class="v-card__content">
+                <span class="v-card__kw">질감 OS</span>
+                <h3 class="v-card__title">채널 간 물성 통일</h3>
+                <p class="v-card__text">모션·썸네일·패키지의 재질 문법을 맞추면, 작은 접점에서도 <strong>브랜드 기억률</strong>이 올라갑니다.</p>
+                <p class="v-card__credit">삽화: 기사 원문 · Design＋</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- 14 -->
+      <section class="slide" id="s-14" aria-label="실무 시사 채널 문화">
+        <span class="slide-num" aria-hidden="true">14 / 16</span>
+        <div class="slide-inner">
+          <header class="slide-head">
+            <span class="slide-badge">실무 시사</span>
+            <h2 class="slide-title">채널·문화 <span class="accent">체크포인트</span></h2>
+          </header>
+          <div class="card-grid card-grid--2">
+            <article class="v-card v-card--warm v-card--photo">
+              <div class="v-card__art v-card__art--media">
+                <img
+                  src="https://design-plus.storage.googleapis.com/wp-content/uploads/2025/12/01213852/main1-768x960.jpg"
+                  width="768"
+                  height="960"
+                  alt="스테이셔너리·아날로그 접점 레퍼런스"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div class="v-card__content">
+                <span class="v-card__kw">터치포인트 믹스</span>
+                <h3 class="v-card__title">빠른 채널 + 느린 접점 병행</h3>
+                <p class="v-card__text">피드 운영만으로는 잔상이 약합니다. 편지·진·실물 키트 같은 <strong>시간이 남는 매체</strong>를 함께 설계합니다.</p>
+                <p class="v-card__credit">삽화: 기사 원문 · Design＋ · 원저작 핀터레스트</p>
+              </div>
+            </article>
+            <article class="v-card v-card--culture v-card--photo">
+              <div class="v-card__art v-card__art--media">
+                <img
+                  src="https://design-plus.storage.googleapis.com/wp-content/uploads/2025/12/01212734/KakaoTalk_20251219_163956013_03.gif"
+                  width="568"
+                  height="314"
+                  alt="문화·패턴 레퍼런스 움짤"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div class="v-card__content">
+                <span class="v-card__kw">레퍼런스 윤리</span>
+                <h3 class="v-card__title">문화 차용 리스크 점검</h3>
+                <p class="v-card__text">지역·전통 모티프는 미감만 빌리면 반발이 큽니다. 출처·의도·협업 구조까지 <strong>맥락 검증</strong>이 필요합니다.</p>
+                <p class="v-card__credit">삽화: 기사 편집 · Design＋ · 원저작 캔바</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- 15 -->
+      <section class="slide" id="s-15" aria-label="마무리">
+        <span class="slide-num" aria-hidden="true">15 / 16</span>
+        <div class="slide-inner">
+          <header class="slide-head">
+            <span class="slide-badge">WRAP</span>
+            <h2 class="slide-title">마무리 <span class="accent">· Q&amp;A</span></h2>
+          </header>
+          <div class="card-grid card-grid--2">
+            <article class="v-card v-card--cosmic v-card--photo">
+              <div class="v-card__art v-card__art--media">
+                <img
+                  src="https://design-plus.storage.googleapis.com/wp-content/uploads/2025/12/01212753/main11.jpg"
+                  width="1440"
+                  height="720"
+                  alt="2026 트렌드 무드 요약 삽화"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div class="v-card__content">
+                <span class="v-card__kw">한 줄 정리</span>
+                <h3 class="v-card__title">2026 디자인 요약</h3>
+                <p class="v-card__text"><strong>현실 비틀기</strong> + <strong>촉각 물성</strong> + <strong>느린 경험과 문화 맥시멀</strong>.</p>
+                <p class="v-card__credit">삽화: Design＋ 기사 「키워드로 살펴본 2026 디자인 트렌드」</p>
+              </div>
+            </article>
+            <article class="v-card v-card--neutral v-card--photo">
+              <div class="v-card__art v-card__art--media">
+                <img
+                  src="https://design-plus.storage.googleapis.com/wp-content/uploads/2025/12/01212753/main11-500x250.jpg"
+                  width="500"
+                  height="250"
+                  alt="Design Plus 기사 썸네일"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div class="v-card__content">
+                <span class="v-card__kw">SOURCE</span>
+                <h3 class="v-card__title">원문 기사</h3>
+                <p class="v-card__text"><a href="https://design.co.kr/article/142896/">Design＋ 기사 바로가기</a></p>
+                <p class="v-card__credit">원문·삽화 저작권은 작성자·언급 출처(Pinterest·Canva 등)에 따릅니다. 내부 공유 후 외부 배포 시 재인용 규정을 확인하세요.</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- 16 참고문헌 -->
+      <section class="slide slide--refs" id="s-16" aria-label="참고 문헌">
+        <span class="slide-num" aria-hidden="true">16 / 16</span>
+        <div class="slide-inner">
+          <header class="slide-head">
+            <span class="slide-badge">참고 문헌</span>
+            <h2 class="slide-title">출처 <span class="accent">· 인용</span></h2>
+          </header>
+          <div class="card-grid card-grid--2">
+            <article class="v-card v-card--cool v-card--photo">
+              <div class="v-card__art v-card__art--media">
+                <img
+                  src="https://design-plus.storage.googleapis.com/wp-content/uploads/2025/12/01212753/main11-1000x500.jpg"
+                  width="1000"
+                  height="500"
+                  alt="Design Plus 기사 헤더 이미지"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div class="v-card__content">
+                <span class="v-card__kw">Article</span>
+                <h3 class="v-card__title">디자인 플러스</h3>
+                <p class="v-card__text">김소현, 「키워드로 살펴본 2026 디자인 트렌드」, Design＋.</p>
+                <p class="v-card__credit">이미지·인용 출처: <a href="https://design.co.kr/article/142896/">design.co.kr/article/142896</a></p>
+              </div>
+            </article>
+            <article class="v-card v-card--neutral v-card--photo">
+              <div class="v-card__art v-card__art--media">
+                <img
+                  src="https://design-plus.storage.googleapis.com/wp-content/uploads/2025/12/01212732/KakaoTalk_20251219_163956013.gif"
+                  width="640"
+                  height="412"
+                  alt="기사 내 트렌드 무드 모음"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div class="v-card__content">
+                <span class="v-card__kw">URL</span>
+                <h3 class="v-card__title">링크</h3>
+                <p class="v-card__text"><a href="https://design.co.kr/article/142896/">design.co.kr/article/142896</a></p>
+                <p class="v-card__credit">기사 본문 삽화는 핀터레스트·캔바 등 원저작자 표기를 따릅니다.</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <button type="button" class="hit-zone hit-zone--prev" id="hitPrev" aria-label="이전 슬라이드" tabindex="-1"></button>
+  <button type="button" class="hit-zone hit-zone--next" id="hitNext" aria-label="다음 슬라이드" tabindex="-1"></button>
+
+  <div class="chrome">
+    <div class="chrome-hint">부서 공유 자료 · ← → 스페이스 · 스와이프</div>
+    <div class="chrome-counter" id="counter" aria-live="polite">1 <span>/ 16</span></div>
+    <div class="chrome-nav">
+      <button type="button" class="btn-nav" id="btnPrev" aria-label="이전">이전</button>
+      <button type="button" class="btn-nav" id="btnNext" aria-label="다음">다음</button>
+      <button type="button" class="btn-nav btn-fs" id="btnFs" aria-label="전체 화면">전체 화면</button>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var track = document.getElementById("deckTrack");
+      var deck = document.getElementById("deck");
+      var total = track.querySelectorAll(".slide").length;
+      var index = 0;
+      var touchStartX = null;
+
+      function clamp(i) {
+        return Math.max(0, Math.min(total - 1, i));
+      }
+
+      function goTo(i) {
+        index = clamp(i);
+        track.style.transform = "translateX(-" + index * 100 + "%)";
+        document.getElementById("counter").innerHTML = index + 1 + ' <span>/ ' + total + "</span>";
+        document.getElementById("btnPrev").disabled = index === 0;
+        document.getElementById("btnNext").disabled = index === total - 1;
+        try {
+          if (history.replaceState) {
+            history.replaceState(null, "", "#s-" + (index + 1));
+          }
+        } catch (err) {
+          /* 일부 file:// 환경에서 replaceState 제한 */
+        }
+      }
+
+      function next() {
+        goTo(index + 1);
+      }
+      function prev() {
+        goTo(index - 1);
+      }
+
+      function parseHash() {
+        var m = /^#s-(\d+)$/.exec(location.hash || "");
+        if (m) {
+          var n = parseInt(m[1], 10);
+          if (n >= 1 && n <= total) return n - 1;
+        }
+        return 0;
+      }
+
+      document.getElementById("btnNext").addEventListener("click", next);
+      document.getElementById("btnPrev").addEventListener("click", prev);
+      document.getElementById("hitNext").addEventListener("click", next);
+      document.getElementById("hitPrev").addEventListener("click", prev);
+
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "ArrowRight" || e.key === "ArrowDown" || e.key === "PageDown" || e.key === " ") {
+          e.preventDefault();
+          next();
+        } else if (e.key === "ArrowLeft" || e.key === "ArrowUp" || e.key === "PageUp") {
+          e.preventDefault();
+          prev();
+        } else if (e.key === "Home") {
+          e.preventDefault();
+          goTo(0);
+        } else if (e.key === "End") {
+          e.preventDefault();
+          goTo(total - 1);
+        }
+      });
+
+      deck.addEventListener(
+        "touchstart",
+        function (e) {
+          if (e.changedTouches.length) touchStartX = e.changedTouches[0].clientX;
+        },
+        { passive: true }
+      );
+
+      deck.addEventListener(
+        "touchend",
+        function (e) {
+          if (touchStartX == null || !e.changedTouches.length) return;
+          var dx = e.changedTouches[0].clientX - touchStartX;
+          touchStartX = null;
+          if (dx < -48) next();
+          else if (dx > 48) prev();
+        },
+        { passive: true }
+      );
+
+      document.getElementById("btnFs").addEventListener("click", function () {
+        if (!document.fullscreenElement) {
+          document.documentElement.requestFullscreen().catch(function () {});
+        } else {
+          document.exitFullscreen();
+        }
+      });
+
+      window.addEventListener("hashchange", function () {
+        goTo(parseHash());
+      });
+
+      goTo(parseHash());
+    })();
+  </script>
+</body>
+</html>
