@@ -6,16 +6,16 @@
   <title>2026 디자인 트렌드 분석 · 부서 공유</title>
   <style>
     :root {
-      --bg: #070a10;
-      --bg-slide: #0e141e;
-      --card: rgba(255, 255, 255, 0.06);
-      --card-edge: rgba(255, 255, 255, 0.12);
-      --text: #eef3f8;
-      --muted: #94a8bd;
-      --accent: #6eb8e8;
-      --accent-soft: rgba(110, 184, 232, 0.22);
-      --chrome-bg: rgba(7, 10, 16, 0.88);
-      --shadow-card: 0 24px 48px rgba(0, 0, 0, 0.35);
+      --bg: #f2f5f9;
+      --bg-slide: #ffffff;
+      --card: rgba(255, 255, 255, 0.88);
+      --card-edge: rgba(0, 0, 0, 0.08);
+      --text: #1a2535;
+      --muted: #64748b;
+      --accent: #1a73b8;
+      --accent-soft: rgba(26, 115, 184, 0.1);
+      --chrome-bg: rgba(255, 255, 255, 0.92);
+      --shadow-card: 0 8px 28px rgba(0, 0, 0, 0.09);
       --radius: 18px;
       --radius-sm: 12px;
     }
@@ -73,10 +73,10 @@
       min-height: 0;
       background-color: var(--bg-slide);
       background-image:
-        radial-gradient(ellipse 90% 55% at 18% -10%, rgba(110, 184, 232, 0.14) 0%, transparent 52%),
-        radial-gradient(ellipse 70% 45% at 92% 8%, rgba(167, 139, 250, 0.1) 0%, transparent 48%),
-        radial-gradient(ellipse 55% 40% at 50% 108%, rgba(110, 184, 232, 0.06) 0%, transparent 55%),
-        linear-gradient(180deg, rgba(255, 255, 255, 0.03) 0%, transparent 28%);
+        radial-gradient(ellipse 90% 55% at 18% -10%, rgba(26, 115, 184, 0.05) 0%, transparent 52%),
+        radial-gradient(ellipse 70% 45% at 92% 8%, rgba(167, 139, 250, 0.04) 0%, transparent 48%),
+        radial-gradient(ellipse 55% 40% at 50% 108%, rgba(26, 115, 184, 0.03) 0%, transparent 55%),
+        linear-gradient(180deg, rgba(0, 0, 0, 0.01) 0%, transparent 28%);
       border-left: 4px solid var(--accent);
     }
 
@@ -109,9 +109,9 @@
       font-weight: 700;
       letter-spacing: 0.06em;
       text-transform: uppercase;
-      color: #b8d9f5;
-      background: linear-gradient(135deg, rgba(110, 184, 232, 0.25), rgba(167, 139, 250, 0.15));
-      border: 1px solid rgba(255, 255, 255, 0.14);
+      color: #1a5f96;
+      background: linear-gradient(135deg, rgba(26, 115, 184, 0.1), rgba(167, 139, 250, 0.07));
+      border: 1px solid rgba(0, 0, 0, 0.1);
       border-radius: 999px;
     }
 
@@ -134,8 +134,8 @@
       letter-spacing: 0.05em;
       padding: 0.35rem 0.6rem;
       border-radius: 8px;
-      background: rgba(0, 0, 0, 0.22);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(0, 0, 0, 0.05);
+      border: 1px solid rgba(0, 0, 0, 0.08);
     }
 
     .slide-title {
@@ -144,7 +144,7 @@
       font-weight: 800;
       letter-spacing: -0.03em;
       line-height: 1.22;
-      color: #fff;
+      color: var(--text);
     }
 
     .slide-title span.accent {
@@ -222,13 +222,13 @@
       content: "";
       position: absolute;
       inset: 0;
-      background: linear-gradient(180deg, transparent 30%, rgba(14, 20, 30, 0.92) 100%);
+      background: linear-gradient(180deg, transparent 30%, rgba(255, 255, 255, 0.92) 100%);
       pointer-events: none;
     }
 
     .v-card__art--media {
       height: clamp(5.75rem, 20vh, 10.5rem);
-      background: #07090e;
+      background: #e8edf4;
     }
 
     .v-card__art--media img {
@@ -241,14 +241,14 @@
     }
 
     .v-card--photo > .v-card__art {
-      background: #07090e !important;
+      background: #e8edf4 !important;
     }
 
     .v-card__credit {
       margin: 0.35rem 0 0;
       font-size: 0.65rem;
       line-height: 1.45;
-      color: rgba(148, 168, 189, 0.95);
+      color: rgba(100, 116, 139, 0.85);
     }
 
     .cover-hero {
@@ -257,8 +257,8 @@
       max-width: min(100%, 520px);
       border-radius: var(--radius-sm);
       overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, 0.14);
-      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.1);
       max-height: min(26vh, 220px);
     }
 
@@ -293,9 +293,9 @@
       font-weight: 800;
       letter-spacing: 0.06em;
       text-transform: uppercase;
-      color: rgba(255, 255, 255, 0.92);
-      background: rgba(0, 0, 0, 0.35);
-      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: rgba(26, 37, 53, 0.75);
+      background: rgba(0, 0, 0, 0.05);
+      border: 1px solid rgba(0, 0, 0, 0.1);
       border-radius: 6px;
     }
 
@@ -305,94 +305,94 @@
       font-weight: 800;
       letter-spacing: -0.02em;
       line-height: 1.3;
-      color: #fff;
+      color: var(--text);
     }
 
     .v-card__text {
       margin: 0;
       font-size: clamp(0.82rem, 1.75vw, 0.95rem);
       line-height: 1.55;
-      color: #c8d5e3;
+      color: #475569;
     }
 
     .v-card__text strong {
-      color: #dceaf8;
+      color: #1a2535;
       font-weight: 700;
     }
 
     /* Card art themes */
     .v-card--cosmic .v-card__art {
       background:
-        radial-gradient(circle at 28% 42%, rgba(255, 255, 255, 0.55) 0%, transparent 42%),
-        radial-gradient(circle at 72% 58%, rgba(110, 184, 232, 0.65) 0%, transparent 55%),
-        radial-gradient(circle at 50% 88%, rgba(167, 139, 250, 0.55) 0%, transparent 48%),
-        linear-gradient(155deg, #0f1c35 0%, #1a1140 100%);
+        radial-gradient(circle at 28% 42%, rgba(200, 220, 255, 0.75) 0%, transparent 42%),
+        radial-gradient(circle at 72% 58%, rgba(110, 184, 232, 0.55) 0%, transparent 55%),
+        radial-gradient(circle at 50% 88%, rgba(180, 155, 255, 0.5) 0%, transparent 48%),
+        linear-gradient(155deg, #cfe0f5 0%, #ddd4f5 100%);
     }
 
     .v-card--cool .v-card__art {
       background:
-        linear-gradient(115deg, rgba(255, 255, 255, 0.22) 0%, transparent 46%),
-        radial-gradient(ellipse 120% 90% at 50% -10%, rgba(170, 220, 255, 0.45) 0%, transparent 62%),
-        linear-gradient(180deg, #153c55 0%, #0a141f 100%);
+        linear-gradient(115deg, rgba(255, 255, 255, 0.6) 0%, transparent 46%),
+        radial-gradient(ellipse 120% 90% at 50% -10%, rgba(170, 220, 255, 0.55) 0%, transparent 62%),
+        linear-gradient(180deg, #c8e2f5 0%, #daeeff 100%);
     }
 
     .v-card--fun .v-card__art {
       background:
-        repeating-linear-gradient(-28deg, transparent, transparent 14px, rgba(255, 255, 255, 0.06) 14px, rgba(255, 255, 255, 0.06) 16px),
-        radial-gradient(circle at 80% 30%, rgba(255, 214, 140, 0.35) 0%, transparent 40%),
-        linear-gradient(145deg, #4a2f63 0%, #1e2438 100%);
+        repeating-linear-gradient(-28deg, transparent, transparent 14px, rgba(0, 0, 0, 0.02) 14px, rgba(0, 0, 0, 0.02) 16px),
+        radial-gradient(circle at 80% 30%, rgba(255, 214, 140, 0.55) 0%, transparent 40%),
+        linear-gradient(145deg, #e8d5f5 0%, #d8daf0 100%);
     }
 
     .v-card--warp .v-card__art {
       background:
-        radial-gradient(ellipse 80% 120% at 20% 50%, rgba(255, 120, 180, 0.35) 0%, transparent 55%),
+        radial-gradient(ellipse 80% 120% at 20% 50%, rgba(255, 160, 200, 0.45) 0%, transparent 55%),
         radial-gradient(ellipse 70% 90% at 85% 40%, rgba(110, 184, 232, 0.45) 0%, transparent 50%),
-        conic-gradient(from 120deg at 50% 50%, #1a2030, #2a2348, #163040, #1a2030);
+        linear-gradient(135deg, #f0d8ee 0%, #cde5f5 100%);
     }
 
     .v-card--drama .v-card__art {
       background:
-        linear-gradient(90deg, rgba(0, 0, 0, 0.55) 0%, transparent 35%, transparent 65%, rgba(0, 0, 0, 0.55) 100%),
-        linear-gradient(180deg, #3b2a28 0%, #121820 100%);
+        linear-gradient(90deg, rgba(0, 0, 0, 0.06) 0%, transparent 35%, transparent 65%, rgba(0, 0, 0, 0.06) 100%),
+        linear-gradient(180deg, #f0ddd8 0%, #f8efec 100%);
     }
 
     .v-card--jelly .v-card__art {
       background:
-        radial-gradient(circle at 40% 38%, rgba(255, 182, 214, 0.65) 0%, transparent 42%),
+        radial-gradient(circle at 40% 38%, rgba(255, 182, 214, 0.6) 0%, transparent 42%),
         radial-gradient(circle at 68% 62%, rgba(182, 236, 222, 0.55) 0%, transparent 48%),
-        linear-gradient(165deg, #2d1f3d 0%, #142430 100%);
+        linear-gradient(165deg, #f5dff0 0%, #dff5ee 100%);
     }
 
     .v-card--glass .v-card__art {
       background:
-        radial-gradient(circle at 18% 72%, rgba(255, 255, 255, 0.35) 0%, transparent 38%),
-        linear-gradient(135deg, rgba(180, 210, 240, 0.35) 0%, rgba(80, 140, 190, 0.15) 50%, transparent 100%),
-        linear-gradient(180deg, #253548 0%, #121820 100%);
+        radial-gradient(circle at 18% 72%, rgba(210, 230, 255, 0.65) 0%, transparent 38%),
+        linear-gradient(135deg, rgba(190, 220, 248, 0.55) 0%, rgba(160, 200, 240, 0.25) 50%, transparent 100%),
+        linear-gradient(180deg, #d8eeff 0%, #eef5ff 100%);
     }
 
     .v-card--warm .v-card__art {
       background:
-        radial-gradient(circle at 55% 35%, rgba(255, 214, 165, 0.45) 0%, transparent 50%),
-        linear-gradient(185deg, #4a3828 0%, #151820 100%);
+        radial-gradient(circle at 55% 35%, rgba(255, 214, 165, 0.6) 0%, transparent 50%),
+        linear-gradient(185deg, #f5e8d0 0%, #fdf5e8 100%);
     }
 
     .v-card--culture .v-card__art {
       background:
-        linear-gradient(45deg, rgba(255, 59, 105, 0.35), transparent 42%),
-        linear-gradient(-35deg, rgba(255, 200, 80, 0.28), transparent 48%),
-        linear-gradient(160deg, #3d2050 0%, #132a35 100%);
+        linear-gradient(45deg, rgba(255, 59, 105, 0.15), transparent 42%),
+        linear-gradient(-35deg, rgba(255, 200, 80, 0.18), transparent 48%),
+        linear-gradient(160deg, #f0d8f5 0%, #d8eef5 100%);
     }
 
     .v-card--mint .v-card__art {
       background:
-        radial-gradient(circle at 70% 28%, rgba(125, 211, 168, 0.45) 0%, transparent 45%),
-        linear-gradient(175deg, #1a3540 0%, #0f141e 100%);
+        radial-gradient(circle at 70% 28%, rgba(125, 211, 168, 0.55) 0%, transparent 45%),
+        linear-gradient(175deg, #d0f0e4 0%, #e8f8f2 100%);
     }
 
     .v-card--neutral .v-card__art {
       background:
-        linear-gradient(140deg, rgba(255, 255, 255, 0.08) 0%, transparent 45%),
-        linear-gradient(180deg, #243042 0%, #121820 100%);
+        linear-gradient(140deg, rgba(255, 255, 255, 0.75) 0%, transparent 45%),
+        linear-gradient(180deg, #e4eaf4 0%, #eef2fa 100%);
     }
 
     /* Cover */
@@ -400,10 +400,10 @@
       text-align: center;
       border-left: none;
       background-image:
-        radial-gradient(ellipse 100% 65% at 50% -25%, rgba(110, 184, 232, 0.35) 0%, transparent 58%),
-        radial-gradient(ellipse 80% 50% at 100% 20%, rgba(167, 139, 250, 0.18) 0%, transparent 50%),
-        radial-gradient(ellipse 70% 55% at 0% 75%, rgba(125, 211, 168, 0.12) 0%, transparent 52%),
-        linear-gradient(185deg, #0b1220 0%, var(--bg) 100%);
+        radial-gradient(ellipse 100% 65% at 50% -25%, rgba(26, 115, 184, 0.1) 0%, transparent 58%),
+        radial-gradient(ellipse 80% 50% at 100% 20%, rgba(167, 139, 250, 0.07) 0%, transparent 50%),
+        radial-gradient(ellipse 70% 55% at 0% 75%, rgba(125, 211, 168, 0.07) 0%, transparent 52%),
+        linear-gradient(185deg, #e4eef8 0%, var(--bg) 100%);
     }
 
     .slide--cover .slide-inner {
@@ -417,9 +417,9 @@
       width: min(36rem, 100%);
       padding: clamp(1.5rem, 4vw, 2.25rem);
       border-radius: calc(var(--radius) + 4px);
-      border: 1px solid rgba(255, 255, 255, 0.14);
-      background: linear-gradient(155deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.03));
-      box-shadow: var(--shadow-card), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      background: linear-gradient(155deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.75));
+      box-shadow: var(--shadow-card), inset 0 1px 0 rgba(255, 255, 255, 0.9);
       backdrop-filter: blur(18px);
       -webkit-backdrop-filter: blur(18px);
     }
@@ -435,7 +435,7 @@
     .slide--cover .subtitle {
       margin: 0 0 1.25rem;
       font-size: clamp(1rem, 2.3vw, 1.3rem);
-      color: #c5d6e8;
+      color: #475569;
       font-weight: 600;
     }
 
@@ -464,8 +464,8 @@
       border-radius: var(--radius-sm);
       padding: 0.65rem 0.7rem;
       text-align: left;
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      background: rgba(0, 0, 0, 0.22);
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      background: rgba(0, 0, 0, 0.04);
     }
 
     .cover-mini__tag {
@@ -479,7 +479,7 @@
     .cover-mini__txt {
       margin: 0;
       font-size: 0.78rem;
-      color: #b9cad9;
+      color: #64748b;
       line-height: 1.45;
     }
 
@@ -504,7 +504,7 @@
       background: var(--chrome-bg);
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
-      border-top: 1px solid rgba(255, 255, 255, 0.07);
+      border-top: 1px solid rgba(0, 0, 0, 0.08);
     }
 
     .chrome-hint {
@@ -544,8 +544,8 @@
 
     .btn-nav {
       appearance: none;
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      background: rgba(0, 0, 0, 0.04);
       color: var(--text);
       font: inherit;
       font-size: 0.82rem;
@@ -557,7 +557,7 @@
 
     .btn-nav:hover:not(:disabled) {
       background: var(--accent-soft);
-      border-color: rgba(110, 184, 232, 0.45);
+      border-color: rgba(26, 115, 184, 0.4);
     }
 
     .btn-nav:disabled {
